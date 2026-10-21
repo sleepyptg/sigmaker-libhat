@@ -1,0 +1,53 @@
+{
+    "$schema": "https://hcli.docs.hex-rays.com/schemas/ida-plugin.json",
+    "IDAMetadataDescriptorVersion": 1,
+    "plugin": {
+        "name": "libhat-sigmaker",
+        "entryPoint": "src/libhat_sigmaker/__init__.py",
+        "version": "0.2.0",
+        "idaVersions": [
+            "9.0",
+            "9.0sp1",
+            "9.1",
+            "9.2",
+            "9.3",
+            "9.4",
+            "10.0"
+        ],
+        "description": "Create and search resilient byte signatures for functions and addresses in IDA Pro, combining ida-sigmaker's generation algorithm with libhat's SIMD scanner, scan hints, alignment, and extended signature syntax (IDA/x64dbg/C arrays/masks/nibble and binary wildcards/libhat C++ codegen).",
+        "categories": [
+            "collaboration-and-productivity",
+            "decompilation",
+            "debugging-and-tracing"
+        ],
+        "keywords": [
+            "binary-patterns",
+            "function-identification",
+            "signature-generation",
+            "signature-search",
+            "libhat",
+            "simd",
+            "x86",
+            "x64",
+            "arm",
+            "aarch64",
+            "mips"
+        ],
+        "license": "MIT",
+        "requiresPython": ">=3.10",
+        "pythonDependencies": [],
+        "urls": {
+            "repository": "https://github.com/sleepyptg/sigmaker-libhat"
+        },
+        "authors": [
+            {
+                "name": "Mahmoud Abdelkader",
+                "email": "mahmoudimus@users.noreply.github.com"
+            },
+            {
+                "name": "Brady Hahn",
+                "email": "zeromemesdev@gmail.com"
+            }
+        ]
+    }
+}

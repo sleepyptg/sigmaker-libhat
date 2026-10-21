@@ -1,0 +1,25 @@
+# Notices
+
+This project combines code from two upstream projects. Their licenses are
+preserved in full in the sibling files.
+
+## ida-sigmaker
+
+- Source: https://github.com/mahmoudimus/ida-sigmaker
+- License: MIT
+- Copyright (c) Mahmoud Abdelkader
+- File: LICENSE-ida-sigmaker
+
+The signature generation core (operand wildcarding, unique-signature search,
+xref signature generation, IDA form UI, batch search) is derived from
+ida-sigmaker v1.15.0 and adapted to use libhat's scanner.
+
+## libhat
+
+- Source: https://github.com/BasedInc/libhat
+- License: MIT
+- Copyright (c) 2022-2026 Brady Hahn
+- File: LICENSE-libhat
+
+The native bridge (`native/scan_bridge.cpp`) links libhat statically and
+exposes a small C ABI. No upstream libhat source was modified.

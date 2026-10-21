@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=77.0.1", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "libhat-sigmaker"
+version = "0.2.0"
+description = "IDA Pro signature maker powered by libhat: IDA-style signature generation plus libhat's SIMD scanner, scan hints, alignment, and extended signature syntax."
+authors = [
+    { name = "Mahmoud Abdelkader", email = "mahmoudimus@users.noreply.github.com" },
+    { name = "Brady Hahn", email = "zeromemesdev@gmail.com" },
+]
+keywords = [
+    "ida pro",
+    "signature",
+    "sigmaker",
+    "libhat",
+    "reverse engineering",
+    "binary analysis",
+    "pattern matching",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Plugins",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Debuggers",
+    "Topic :: Software Development :: Disassemblers",
+]
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE", "LICENSE-ida-sigmaker", "LICENSE-libhat"]
+dependencies = []
+
+[project.urls]
+Source = "https://github.com/sleepyptg/sigmaker-libhat"
+Issues = "https://github.com/sleepyptg/sigmaker-libhat/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+libhat_sigmaker = ["*.dll", "*.so", "*.dylib"]
+
+[tool.setuptools]
+include-package-data = true
