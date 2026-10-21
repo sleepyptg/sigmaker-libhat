@@ -57,6 +57,12 @@ What changed:
   first mismatching word and falling back to byte compares only for the tail.
 - **Cheaper index build.** The byte-index builder keeps its 65537-entry cursor
   table in thread-local storage, so it no longer zero-fills it on every call.
+- **Correct range filtering.** One-byte seed buckets are grouped by the second
+  byte, so their candidate offsets are not sorted. The range filter used to
+  walk a monotonic cursor (and stop early) over that array, which could drop
+  real matches in gapped multi-segment buffers and make a non-unique pattern
+  look unique. It now matches each candidate against its range directly, with a
+  single-range fast path for whole-buffer searches.
 
 The libhat scan kernel itself is unchanged; these are all wins in how the
 plugin drives it. The new entry points are optional: `libhat_native` probes

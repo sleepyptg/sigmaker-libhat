@@ -726,20 +726,36 @@ LIBHAT_SCAN_API std::size_t libhat_scan_filter_offsets(
         return 0;
     }
 
-    std::size_t range_index = 0;
+    // Candidates are not guaranteed to be ordered: 1-byte seed buckets come
+    // from a 2-byte key table, so they are grouped by the second byte rather
+    // than by position. Ranges must be ordered and non-overlapping.
     std::size_t write = 0;
 
+    if (range_count == 1) {
+        // Whole-buffer and single-segment scopes are the hot path.
+        const std::uint64_t begin = range_starts[0];
+        const std::uint64_t end = range_ends[0];
+        for (std::size_t read = 0; read < count; ++read) {
+            const std::uint64_t start = candidates[read];
+            if (start >= begin && start + pattern_size <= end) {
+                candidates[write++] = start;
+            }
+        }
+        return write;
+    }
+
+    // Gapped buffers: binary-search the range ends per candidate instead of
+    // walking a monotonic cursor, which would drop valid hits (and could make
+    // a non-unique pattern look unique) when candidates are not sorted.
     for (std::size_t read = 0; read < count; ++read) {
         const std::uint64_t start = candidates[read];
-        while (range_index < range_count && start >= range_ends[range_index]) {
-            ++range_index;
+        const auto* it = std::upper_bound(range_ends, range_ends + range_count, start);
+        if (it == range_ends + range_count) {
+            continue;
         }
-        if (range_index == range_count) {
-            break;
-        }
-        if (start >= range_starts[range_index]
-            && start + pattern_size <= range_ends[range_index]) {
-            candidates[write++] = candidates[read];
+        const std::size_t index = static_cast<std::size_t>(it - range_ends);
+        if (start >= range_starts[index] && start + pattern_size <= *it) {
+            candidates[write++] = start;
         }
     }
     return write;

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.23)
 
-project(libhat_sigmaker_native VERSION 0.2.0 LANGUAGES CXX)
+project(libhat_sigmaker_native VERSION 0.2.1 LANGUAGES CXX)
 
 # The sibling checkout is used by default so the bridge and the Python plugin
 # can be developed side by side. A standalone checkout can point CMake at a

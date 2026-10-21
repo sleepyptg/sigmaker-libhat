@@ -11,6 +11,7 @@ Original author: @mahmoudimus (Mahmoud Abdelkader)
 from __future__ import annotations
 
 import array
+import bisect
 import contextlib
 import contextvars
 import csv
@@ -2485,7 +2486,12 @@ def _filter_offsets_into_search_ranges(
     range_starts: typing.Sequence[int],
     range_ends: typing.Sequence[int],
 ) -> int:
-    """Compact sorted candidates whose full pattern fits one search range."""
+    """Compact candidates whose full pattern fits one search range.
+
+    Candidates are not assumed to be ordered: 1-byte seed buckets are grouped
+    by the second byte, not by position. Each candidate is matched against the
+    first range whose end lies past it, mirroring the native kernel.
+    """
     module = _Speedups.current().module
     if module is not None:
         return module.filter_offsets_by_search_ranges(
@@ -2508,17 +2514,16 @@ def _filter_offsets_into_search_ranges(
             raise ValueError("search ranges must be ordered and non-overlapping")
         previous_end = end
 
-    range_index = 0
+    ends = range_ends
     write_index = 0
     for read_index in range(count):
         start = cands[read_index]
-        while range_index < len(range_ends) and start >= range_ends[range_index]:
-            range_index += 1
-        if range_index == len(range_ends):
-            break
+        range_index = bisect.bisect_right(ends, start)
+        if range_index == len(ends):
+            continue
         if (
             start >= range_starts[range_index]
-            and start + pattern_size <= range_ends[range_index]
+            and start + pattern_size <= ends[range_index]
         ):
             cands[write_index] = start
             write_index += 1

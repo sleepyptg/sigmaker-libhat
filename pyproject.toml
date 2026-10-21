@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "libhat-sigmaker"
-version = "0.2.0"
+version = "0.2.1"
 description = "IDA Pro signature maker powered by libhat: IDA-style signature generation plus libhat's SIMD scanner, scan hints, alignment, and extended signature syntax."
 authors = [
     { name = "Mahmoud Abdelkader", email = "mahmoudimus@users.noreply.github.com" },
