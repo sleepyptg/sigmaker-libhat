@@ -101,7 +101,7 @@ the two-pass fallback.
 
    ```python
    import os, sys
-   _src = r"C:\path\to\libhat-sigmaker\src"
+   _src = r"C:\path\to\sigmaker-libhat\src"
    if os.path.isdir(_src) and _src not in sys.path:
        sys.path.insert(0, _src)
    import libhat_sigmaker
